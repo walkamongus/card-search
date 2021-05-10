@@ -6,7 +6,6 @@ package hsapi
 import (
 	"errors"
 	"fmt"
-	"net/http"
 	"time"
 
 	"github.com/go-resty/resty/v2"
@@ -152,9 +151,6 @@ func NewHSClient(id string, secret string, debug bool) *HSClient {
 	}
 	client.SetHostURL("https://us.api.blizzard.com")
 	client.SetRetryCount(3)
-	client.AddRetryCondition(func(r *resty.Response, err error) bool {
-		return r.StatusCode() == http.StatusTooManyRequests
-	})
 	return &HSClient{
 		ClientID:     id,
 		ClientSecret: secret,
